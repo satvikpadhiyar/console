@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import Login from "./screens/login";
-import Profile from "./screens/profile";
 import Dashboard from "./screens/dashboard";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import fifth from "./screens/fifth";
+import Profile from "./screens/Profile";
 import fourth from "./screens/fourth";
-import third from "./screens/third";
-
+import Camera from "./screens/camera";
+import AuthLoading from "./screens/authLoading";
 export default class App extends Component {
   render() {
     return <AppContainer />;
@@ -18,11 +17,15 @@ export default class App extends Component {
 
 const MainNavigator = createMaterialBottomTabNavigator(
   {
-    Dashboard: {
+    Home: {
       screen: Dashboard,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Ionicons name="ios-desktop" size={22} color={focused?"blue":"grey"} />
+          <Ionicons
+            name="md-checkmark-circle"
+            size={22}
+            color={focused ? "blue" : "grey"}
+          />
         )
       }
     },
@@ -30,15 +33,23 @@ const MainNavigator = createMaterialBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Ionicons name="md-checkmark-circle" size={22} color={focused?"blue":"grey"} />
+          <Ionicons
+            name="md-checkmark-circle"
+            size={22}
+            color={focused ? "blue" : "grey"}
+          />
         )
       }
     },
     Camera: {
-      screen: third,
+      screen: Camera,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Ionicons name="ios-aperture" size={22} color={focused?"blue":"grey"} />
+          <Ionicons
+            name="ios-aperture"
+            size={22}
+            color={focused ? "blue" : "grey"}
+          />
         )
       }
     },
@@ -46,41 +57,53 @@ const MainNavigator = createMaterialBottomTabNavigator(
       screen: fourth,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Ionicons name="md-checkmark-circle" size={22} color={focused?"blue":"grey"} />
+          <Ionicons
+            name="md-checkmark-circle"
+            size={22}
+            color={focused ? "blue" : "grey"}
+          />
         )
       }
     },
     Profile: {
-      screen: fifth,
+      screen: Profile,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Ionicons name="ios-contact" size={22} color={focused?"blue":"grey"} />
+          <Ionicons
+            name="ios-contact"
+            size={22}
+            color={focused ? "blue" : "grey"}
+          />
         )
       }
     }
   },
   {
-    initialRouteName: "Dashboard",
+    initialRouteName: "Camera",
     activeColor: "blue",
     barStyle: { backgroundColor: "white" }
   }
 );
 
-const RootNavigator = createStackNavigator(
-  {
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        header: null
-      }
-    },
-    MainNavigator: {
-      screen: MainNavigator,
-      navigationOptions: {
-        header: null
-      }
+const RootNavigator = createSwitchNavigator({
+  AuthLoading: {
+    screen: AuthLoading,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  MainNavigator: {
+    screen: MainNavigator,
+    navigationOptions: {
+      headerShown: false
     }
   }
-);
+});
 
 const AppContainer = createAppContainer(RootNavigator);
