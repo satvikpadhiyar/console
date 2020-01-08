@@ -94,7 +94,7 @@ async function pictureInfo(camera) {
     ]
   });
   let response = await fetch(
-    `https://vision.googleapis.com/v1/images:annotate?key=${A PI}`,
+    `https://vision.googleapis.com/v1/images:annotate?key=${API}`,
     {
       headers: {
         Accept: "application/json",
